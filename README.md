@@ -42,9 +42,11 @@ The API should allow you to do the usual activities.
 
 Using the `openapi-core.yml` file as a guide also create the API Documentation for the API.
 
-Core Criteria - all of the endpoints exist but references to the other tables are not necessarily implemented/working.
+## Core Criteria 
+All of the endpoints exist but references to the other tables are not necessarily implemented/working.
 
-Extension Criteria - as well as the endpoints existing references to other tables are correctly working (ie if I view an author I can see details of their books etc).
+## Extension Criteria
+As well as the endpoints existing references to other tables are correctly working (ie if I view an author I can see details of their books etc).
 
 
 
