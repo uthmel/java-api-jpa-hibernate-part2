@@ -38,15 +38,15 @@ Implement an API for the following database tables
 | author_id    | INT    | FK -> References Authors(id)    |
 | publisher_id | INT    | FK -> References Publishers(id) |
 
-The API should allow you to do the usual activities.
+The API should allow you to do the usual CRUD activities.
 
-Using the `openapi-core.yml` file as a guide also create the API Documentation for the API.
+The API is specified [here](https://boolean-uk.github.io/java-api-jpa-hibernate-part2/) as usual.
 
 ## Core Criteria 
 All of the endpoints exist but references to the other tables are not necessarily implemented/working.
 
 ## Extension Criteria
-As well as the endpoints existing references to other tables are correctly working (ie if I view an author I can see details of their books etc).
+As well as the endpoints existing, references to other tables are correctly working (ie if I view an author I can see details of their books etc).
 
 
 

@@ -1,52 +1,93 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
-  title: Java API Exercise - Core Criteria
-  description: |-
+  title: Java API, JPA and Hibernate Part 2 - Core Criteria
+  description: Core Criteria for Java API, JPA and Hibernate Part 2
   version: 0.2.2
+  contact:
+    name: JPA and Hibernate Part 2 Exercise
 
 servers:
   - url: http://localhost:4000
 tags:
-  - name: examples
+  - name: authors
+  - name: publishers
+  - name: books
 paths:
-  /examples:
+  /authors:
     post:
       tags:
-        - examples
-      summary: Example POST route
-      description: Description of an example POST route
+        - authors
+      summary: Create author
+      description: Create a new Author
+      operationId: createAuthor
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateExample'
+              $ref: '#/components/schemas/CreateAuthor'
       responses:
-        201:
+        '201':
+          description: Successfully created a new author
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Example'
+                $ref: '#/components/schemas/Author'
+        '400':
+          description: "Could not create author, please check all required fields are correct."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
     get:
       tags:
-        - examples
-      summary: Example GET route
-      description: Description of an example GET route
+        - authors
+      summary: Get Authors
+      description: Get all of the authors in the list
+      operationId: getAuthors
       responses:
-        200:
+        '200':
+          description: Successfully get a list of all of the authors in the list
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AllExamples'
-  /examples/{id}:
-    put:
+                $ref: '#/components/schemas/AllAuthors'
+  /authors/{id}:
+    get:
       tags:
-        - examples
-      summary: Example PUT route
-      description: Description of an example PUT route
+        - authors
+      summary: Get an author
+      description: Get a specific author by their id
+      operationId: getSpecificAuthor
       parameters:
         - name: id
           in: path
-          description: The ID of the example to update
+          description: The ID of the author to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Get the specified author from the list given their ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+        '404':
+          description: "No authors with that id were found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+    put:
+      tags:
+        - authors
+      summary: Update an author
+      description: Update the specified author
+      operationId: updateAuthor
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the author to update
           required: true
           schema:
             type: integer
@@ -54,63 +95,421 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateExample'
+              $ref: '#/components/schemas/CreateAuthor'
       responses:
-        201:
+        '201':
+          description: Successfully updated the specified author
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Example'
+                $ref: '#/components/schemas/Author'
+        '400':
+          description: "Could not update the author, please check all required fields are correct."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '404':
+          description: "No authors with that id were found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
     delete:
       tags:
-        - examples
-      summary: Example DELETE route
-      description: Description of an example DELETE route
+        - authors
+      summary: Delete an author
+      description: Delete the specified author
+      operationId: deleteAuthor
       parameters:
         - name: id
           in: path
-          description: The ID of the example to delete
+          description: The ID of the author to delete
           required: true
           schema:
             type: integer
       responses:
-        200:
+        '200':
+          description: Successfully deleted the specified author
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Example'
-
+                $ref: '#/components/schemas/Author'
+        '404':
+          description: "No authors with that id were found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+  /publishers:
+    post:
+      tags:
+        - publishers
+      summary: Create publisher
+      description: Create a new Publisher
+      operationId: createPublisher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePublisher'
+      responses:
+        '201':
+          description: Successfully created a new publisher
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+        '400':
+          description: "Could not create publisher, please check all required fields are correct."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+    get:
+      tags:
+        - publishers
+      summary: Get Publishers
+      description: Get all of the publishers in the list
+      operationId: getPublishers
+      responses:
+        '200':
+          description: Successfully get a list of all of the publishers in the list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllPublishers'
+  /publishers/{id}:
+    get:
+      tags:
+        - publishers
+      summary: Get a Publisher
+      description: Get a specific publisher by their id
+      operationId: getSpecificPublisher
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the publisher to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Get the specified publisher from the list given their ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+        '404':
+          description: "No publishers with that id were found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+    put:
+      tags:
+        - publishers
+      summary: Update a publisher
+      description: Update the specified publisher
+      operationId: updatePublisher
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the publisher to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePublisher'
+      responses:
+        '201':
+          description: Successfully updated the specified publisher
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+        '400':
+          description: "Could not update the publisher, please check all required fields are correct."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '404':
+          description: "No publishers with that id were found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+    delete:
+      tags:
+        - publishers
+      summary: Delete a publisher
+      description: Delete the specified publisher
+      operationId: deletePublisher
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the publisher to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully deleted the specified publisher
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+        '404':
+          description: "No publishers with that id were found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+  /books:
+    post:
+      tags:
+        - books
+      summary: Create book
+      description: Create a new Book
+      operationId: createBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBook'
+      responses:
+        '201':
+          description: Successfully created a new book
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: "Could not create book, please check all required fields are correct."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+    get:
+      tags:
+        - books
+      summary: Get Books
+      description: Get all of the books in the list
+      operationId: getBooks
+      responses:
+        '200':
+          description: Successfully get a list of all of the books in the list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllBooks'
+  /books/{id}:
+    get:
+      tags:
+        - books
+      summary: Get a Book
+      description: Get a specific book by its id
+      operationId: getSpecificBook
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Get the specified book from the list given its ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: "No books with that id were found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+    put:
+      tags:
+        - books
+      summary: Update a book
+      description: Update the specified book
+      operationId: updateBook
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBook'
+      responses:
+        '201':
+          description: Successfully updated the specified book
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: "Could not update the book, please check all required fields are correct."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '404':
+          description: "No books with that id were found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+    delete:
+      tags:
+        - books
+      summary: Delete a book
+      description: Delete the specified book
+      operationId: deleteBook
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully deleted the specified book
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: "No books with that id were found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
 components:
   schemas:
-    CreateExample:
+    CreateAuthor:
       type: object
-      required: [propertyOne, propertyTwo]
+      required: [first_name, last_name, email, alive]
       properties:
-        propertyOne:
+        first_name:
           type: string
-          example: "Example Value"
-        propertyTwo:
-          type: email
-          format: email
-          example: "example@email.value"
-    Example:
+          example: "Isaac"
+        last_name:
+          type: string
+          example: "Asimov"
+        email:
+          type: string
+          example: "isaac@monlith.com"
+        alive:
+          type: boolean
+          example: false
+    Author:
       type: object
       properties:
         id:
           type: integer
           example: 1
-        propertyOne:
+        first_name:
           type: string
-          example: "Example Value"
-        propertyTwo:
+          example: "Isaac"
+        last_name:
           type: string
-          example: "example@email.value"
-        createdAt:
+          example: "Asimov"
+        email:
           type: string
-          format: DateTime
-          pattern: YYYY-MM-DDTHH:MM:SS
-          example: 2023-03-14T11:01:56.633+00:00
-    AllExamples:
+          example: "isaac@monlith.com"
+        alive:
+          type: boolean
+          example: false
+    AllAuthors:
       type: array
       items:
-        $ref: '#/components/schemas/Example'
+        $ref: '#/components/schemas/Author'
+    CreatePublisher:
+      type: object
+      required: [name, location]
+      properties:
+        name:
+          type: string
+          example: "Penguin"
+        location:
+          type: string
+          example: "London"
+    Publisher:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Penguin"
+        location:
+          type: string
+          example: "London"
+    AllPublishers:
+      type: array
+      items:
+        $ref: '#/components/schemas/Publisher'
+    CreateBook:
+      type: object
+      required: [title, genre, author_id, publisher_id]
+      properties:
+        title:
+          type: string
+          example: "2001: A Space Odyssey"
+        genre:
+          type: string
+          example: "Science Fiction"
+        author_id:
+          type: integer
+          example: 1
+        publisher_id:
+          type: integer
+          example: 1
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "2001: A Space Odyssey"
+        genre:
+          type: string
+          example: "Science Fiction"
+        author_id:
+          type: integer
+          example: 1
+        publisher_id:
+          type: integer
+          example: 1
+    AllBooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/Book'
+    Error400:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "bad request"
+    Error404:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "not found"
