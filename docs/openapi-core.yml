@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: Java API, JPA and Hibernate Part 2 - Core Criteria
   description: Core Criteria for Java API, JPA and Hibernate Part 2
-  version: 0.2.2
+  version: 0.2.3
   contact:
     name: JPA and Hibernate Part 2 Exercise
 
